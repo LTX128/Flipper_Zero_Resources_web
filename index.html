@@ -2,326 +2,466 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" type="image/png" href="icon.png">
-</head>
-
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flipper Zero Resources</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #ffffff;
-            text-align: center;
+        :root {
+            --primary: #00b894;
+            --primary-hover: #00cec9;
+            --bg-gradient: linear-gradient(135deg, #1a2a6c, #2a5298);
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-lighter: rgba(255, 255, 255, 0.7);
+            --transition: all 0.3s ease;
+            --border-radius: 12px;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --highlight: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-light);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #ffffff, #c9d6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: var(--text-lighter);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .menu {
-            margin: 20px auto;
-            width: 80%;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: left;
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease-in-out;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.5s ease-out;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 0.8rem;
         }
 
-        button {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            cursor: pointer;
-            background: #00b894;
-            color: #ffffff;
-            font-size: 16px;
-            border-radius: 8px;
-            transition: background 0.3s ease, transform 0.2s ease;
+        .btn {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+            padding: 0.9rem 1.2rem;
+            background: rgba(0, 184, 148, 0.15);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        button:hover {
-            background: #00cec9;
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--highlight);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background: rgba(0, 206, 201, 0.25);
             transform: translateY(-2px);
         }
 
-        button:active {
+        .btn:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn:active {
             transform: translateY(0);
+        }
+
+        .btn i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            min-width: 20px;
         }
 
         .hidden {
             display: none;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #ffffff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .menu button {
-            background: rgba(0, 184, 148, 0.8);
-        }
-
-        .menu button:hover {
-            background: rgba(0, 206, 201, 0.8);
-        }
-
         .footer {
-            margin-top: 20px;
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-lighter);
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            margin-top: auto;
         }
 
         .footer a {
-            color: #00b894;
+            color: var(--primary);
             text-decoration: none;
+            transition: var(--transition);
         }
 
         .footer a:hover {
+            color: var(--primary-hover);
             text-decoration: underline;
         }
 
-        .icon {
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1.5rem 1rem;
+            }
+        }
+
+        /* Special button for back */
+        .btn-back {
+            background: rgba(255, 255, 255, 0.05);
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Section titles */
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
             margin-right: 10px;
+            color: var(--primary);
         }
     </style>
-
-    <!--Icons-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-    <h1>Flipper Zero Resources</h1>
-    <div class="menu" id="mainMenu">
-        <button onclick="showSubMenu('firmwareMenu')"><i class="icon fas fa-microchip"></i>Install Flipper Zero
-            Firmware</button>
-        <button onclick="showSubMenu('toolsMenu')"><i class="icon fas fa-tools"></i>Install Flipper Zero Tools</button>
-        <button onclick="showSubMenu('qflipperMenu')"><i class="icon fas fa-download"></i>Install QFlipper</button>
-        <button onclick="showSubMenu('discordMenu')"><i class="icon fab fa-discord"></i>Discord Server</button>
-        <button onclick="showSubMenu('modulesMenu')"><i class="icon fas fa-puzzle-piece"></i>Modules (GPIO)</button>
-        <button onclick="showSubMenu('aestheticMenu')"><i class="icon fas fa-palette"></i>Aesthetic Products</button>
-        <button onclick="showSubMenu('wifiMenu')"><i class="icon fas fa-wifi"></i>Wifi Devboard Flasher by
-            UberGuidoZ</button>
-        <button onclick="showSubMenu('fapMenu')"><i class="icon fas fa-cogs"></i>Useful .fap applications</button>
-        <button onclick="showSubMenu('diagramsMenu')"><i class="icon fas fa-project-diagram"></i>Diagrams for module
-            connections</button>
-        <button onclick="showSubMenu('buyMenu')"><i class="icon fas fa-shopping-cart"></i>Online shop for Flipper
-            Zero</button>
-        <button onclick="showSubMenu('aboutMenu')"><i class="icon fas fa-user"></i> About me</button>
-        <button onclick="exitApp()"><i class="icon fas fa-sign-out-alt"></i>Exit</button>
+    <div class="container">
+        <header>
+            <h1>Flipper Zero Resources</h1>
+            <p class="subtitle">Your complete guide to Flipper Zero firmware, tools and accessories</p>
+        </header>
+
+        <!-- Main Menu -->
+        <div class="menu" id="mainMenu">
+            <div class="menu-grid">
+                <button class="btn" onclick="showSubMenu('firmwareMenu')">
+                    <i class="fas fa-microchip"></i>Install Firmware
+                </button>
+                <button class="btn" onclick="showSubMenu('toolsMenu')">
+                    <i class="fas fa-tools"></i>Install Tools
+                </button>
+                <button class="btn" onclick="showSubMenu('qflipperMenu')">
+                    <i class="fas fa-download"></i>Install QFlipper
+                </button>
+                <button class="btn" onclick="showSubMenu('discordMenu')">
+                    <i class="fab fa-discord"></i>Discord Servers
+                </button>
+                <button class="btn" onclick="showSubMenu('modulesMenu')">
+                    <i class="fas fa-puzzle-piece"></i>GPIO Modules
+                </button>
+                <button class="btn" onclick="showSubMenu('aestheticMenu')">
+                    <i class="fas fa-palette"></i>Aesthetic Products
+                </button>
+                <button class="btn" onclick="showSubMenu('wifiMenu')">
+                    <i class="fas fa-wifi"></i>Wifi Devboard Flasher
+                </button>
+                <button class="btn" onclick="showSubMenu('fapMenu')">
+                    <i class="fas fa-cogs"></i>Useful .fap Apps
+                </button>
+                <button class="btn" onclick="showSubMenu('diagramsMenu')">
+                    <i class="fas fa-project-diagram"></i>Connection Diagrams
+                </button>
+                <button class="btn" onclick="showSubMenu('buyMenu')">
+                    <i class="fas fa-shopping-cart"></i>Online Shops
+                </button>
+                <button class="btn" onclick="showSubMenu('aboutMenu')">
+                    <i class="fas fa-user"></i> About Me
+                </button>
+                <button class="btn" onclick="exitApp()">
+                    <i class="fas fa-sign-out-alt"></i>Exit
+                </button>
+            </div>
+        </div>
+
+        <!-- Firmwares -->
+        <div class="menu hidden" id="firmwareMenu">
+            <h3 class="section-title"><i class="fas fa-microchip"></i>Firmware Options</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://momentum-fw.dev/')">Momentum Firmware</button>
+                <button class="btn" onclick="openLink('https://flipper-xtre.me/')">Xtreme Firmware</button>
+                <button class="btn" onclick="openLink('https://flipperunleashed.com/')">Unleashed Firmware</button>
+                <button class="btn" onclick="openLink('https://flipperzero.one/')">Official Firmware</button>
+                <button class="btn" onclick="openLink('https://rogue-master.net/')">RogueMaster Firmware</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="menu hidden" id="toolsMenu">
+            <h3 class="section-title"><i class="fas fa-tools"></i>Tool Collections</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/l7cs01x5gho6nti/Sub-GHz_Collection.zip/file')">Sub-GHz Collection</button>
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/lnetzsflnme479w/NFC_Collection.zip/file')">NFC Collection</button>
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/reyblgkcw6jff72/Infrared_Collection.zip/file')">Infrared Collection</button>
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/dewd32r9q4pl0q6/BadUSB_-_BLE_Collection.zip/file')">BadUSB/BLE Scripts</button>
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/3g1exm8isstg7q0/RFID_Collection.zip/file')">RFID Collection</button>
+                <button class="btn" onclick="openLink('https://github.com/UberGuidoZ/Flipper')">All-in-One Collection</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- QFlipper -->
+        <div class="menu hidden" id="qflipperMenu">
+            <h3 class="section-title"><i class="fas fa-download"></i>QFlipper Clients</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://update.flipperzero.one/builds/qFlipper/1.3.3/qFlipperSetup-64bit-1.3.3.exe?_gl=1*1mcus1w*_ga_GM78S6JK0K*MTc0MTIxMDIxMC4xLjAuMTc0MTIxMDIxOC41Mi4wLjA.')">Windows Version</button>
+                <button class="btn" onclick="openLink('https://update.flipperzero.one/builds/qFlipper/1.3.3/qFlipper-x86_64-1.3.3.AppImage?_gl=1*pt4app*_ga_GM78S6JK0K*MTc0MTIxMDIxMC4xLjAuMTc0MTIxMDIxOC41Mi4wLjA.')">Linux Version</button>
+                <button class="btn" onclick="openLink('https://update.flipperzero.one/builds/qFlipper/1.3.3/qFlipper-1.3.3.dmg?_gl=1*93hi4i*_ga_GM78S6JK0K*MTc0MTIxMDIxMC4xLjAuMTc0MTIxMDIxOC41Mi4wLjA.')">macOS Version</button>
+                <button class="btn" onclick="openLink('https://play.google.com/store/apps/details?id=com.flipperdevices.app')">Android App</button>
+                <button class="btn" onclick="openLink('https://apps.apple.com/app/flipper-mobile-app/id1534655259')">iOS App</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- Discord -->
+        <div class="menu hidden" id="discordMenu">
+            <h3 class="section-title"><i class="fab fa-discord"></i>Discord Communities</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://discord.gg/RpEk2NQ3pQ')">Official Flipper Server</button>
+                <button class="btn" onclick="openLink('https://discord.gg/mdEQjg33DG')">Momentum Firmware</button>
+                <button class="btn" onclick="openLink('https://discord.gg/crazyco')">Xtreme Firmware</button>
+                <button class="btn" onclick="openLink('https://discord.unleashedflip.com/')">Unleashed Firmware</button>
+                <button class="btn" onclick="openLink('https://discord.gg/gF2bBUzAFe')">Rogumaster Firmware</button>
+                <button class="btn" onclick="openLink('https://discord.gg/EGQJurMUwh')">Kanjian</button>
+                <button class="btn" onclick="openLink('https://discord.gg/CqqPS5Tc3T')">HackLab</button>
+                <button class="btn" onclick="openLink('https://discord.gg/emensta-s-community-1229027335534153791')">Emensta's Community</button>
+                <button class="btn" onclick="openLink('https://discord.gg/rkJDEgY6qP')">POPP.N</button>
+                <button class="btn" onclick="openLink('https://discord.gg/uVKF6pJhgX')">EuroThrottle TECH</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- Modules -->
+        <div class="menu hidden" id="modulesMenu">
+            <h3 class="section-title"><i class="fas fa-puzzle-piece"></i>GPIO Modules</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://www.amazon.fr/-/en/dp/B0BBWHS5R1/ref=sr_1_5?crid=234ICU4KP907S&dib=eyJ2IjoiMSJ9.vcWyGk7zLsCqgTDDsdeyyDnjgZw1NbgHhKUZCQ5wZ1hvFDM6LT6hhjaP71v-k4vvd0hAGZx4m9snX3Nsge-eeegSaMviDsFU2j380w_VYRjG_D7KZdTQ4olGugEN48eHB3GHHK-H3YfkidPD9HKOmWN_xCIhXGo1QGGxVJenqFphpML-TIjPoZbFw8cqMKEvzWVXWULq-QkXKBaUgJ0aqbslqe2llOtFihlB49abFwYxsXJeR4CKBGdLarfOwgDLNeKJwrejvY0OJHbWSMFBTJoJi_MSxnXuEXOOqPxNWHWNFGevQPkOElJwzIG9paRKB7PUZUSdL6-zMf3vo3PiSCK3CkAZ2UOBaJVtDaLgVuv7hJYxHlwI2FvlBkkgriOtcM0a3U1_H2CyqJIVESanRj5BX-yQlwqESLvwqWbCQs7FcfFi-63deCmHA2tGD_zU.-E6aOTR2Q2k0XVcJ5MltW2bnpRSutfNPNCQNSSZlDNQ&dib_tag=se&keywords=flipper+zero+wifi+devboard&qid=1741214420&sprefix=flipper+zero+w%2Caps%2C108&sr=8-5')">Wifi Module v1</button>
+                <button class="btn" onclick="openLink('https://www.amazon.fr/-/en/dp/B0CSVRTZD9/ref=sr_1_6?crid=105VUG1E2N65J&dib=eyJ2IjoiMSJ9.78yRPA6vQjt42H7YvzlL-q0G7BC1okfQaYREPQJbOqcL1sMkZEmx0bh9_nYShO8bj8aMi1VfSJB7PJiP73pVUh8ouQ2Q9nVamuEqvi3936OV4lZg2osgiDvOo-HsjF9ksvALX3Jbt8Em1QmDEN6ZH6SFGtnxY2Fs0wFfrHa-VlqDFbi6xQyBUmqYoggvmaILBzhIEfHcYSpGZwGrXs6ehyp5gUXHYYbVoUgKOIZLYWWgb0zC7ufg2ssQGWEdNru_q0z2x662TA6pK8zbEox04bvy3lYh80WpAgCcViWAuI_pRJ_zJCIoZkyleo6WdSp78i68PhrLfvva2VwAudZlRjCclcQJPfd4hckRnf3OsqZ-GTlycwQgxtFNwONzlGJIUlWo4uk7t-rIKHyUqgy8anJAWKzrG97q2rZFkP8RS3Zr6db5PFKDSxa_-wosfDKI.CIPYQSLlltIloDITki_9U9TgsqzrMUQUX6YY_qUyeu8&dib_tag=se&keywords=flipper%2Bzero%2Bmodule&qid=1741214469&sprefix=flipper%2Bzero%2Bmodu%2Caps%2C113&sr=8-6&th=1')">CC1101 Module Bundle</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/item/1005007894499552.html')">CC1101 Module</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/item/1005007072081464.html')">Connection Cables</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/item/1005007530439808.html')">NRF24L01 (Premium)</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/item/1005007279570381.html')">NRF24L01 Module</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/item/1005008555214261.html')">Multiboard (CC1101+WiFi+ESP32/NRF24)</button>
+                <button class="btn" onclick="openLink('https://rabbit-labs.com/product/the-original-ir-blaster-compatible-with-flipper-zero-by-rabbit-labs-3/?v=82a9e4d26595')">IR Module</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/item/1005008555071982.html')">Deauther Module</button>
+                <button class="btn" onclick="openLink('https://www.etsy.com/fr/listing/1626018148/carte-magique-nfc-1k-uid-modifiable-pour?ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=flipper+zero&ref=sr_gallery-1-1&pro=1&sts=1&content_source=6e1ad03d1bfeb3625a05973c3cad390f21f52f5c%253A1626018148&organic_search_click=1&logging_key=6e1ad03d1bfeb3625a05973c3cad390f21f52f5c%3A1626018148')">NFC Cards</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- Aesthetic -->
+        <div class="menu hidden" id="aestheticMenu">
+            <h3 class="section-title"><i class="fas fa-palette"></i>Aesthetic Products</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://www.etsy.com/fr/listing/1665924660/estuche-flipper-zero-wifi-devboard?ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=flipper+zero&ref=sr_gallery-1-6&pro=1&sts=1&content_source=abeebb4dccb54a6e8a7e0c3d727ee00137b2cd00%253A1665924660&organic_search_click=1&logging_key=abeebb4dccb54a6e8a7e0c3d727ee00137b2cd00%3A1665924660')">Devboard Protection</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/item/1005007732068498.html')">Black Silicone Case</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/item/1005006391639410.html')">Protective Cover</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/item/1005006174311166.html')">Transparent Case</button>
+                <button class="btn" onclick="openLink('https://www.amazon.fr/-/en/dp/B0CK4V8M4M/ref=sr_1_7?crid=SBGDNCAT8ETH&dib=eyJ2IjoiMSJ9.U-3lRF_uQROAVfastNmqPRoSSjmH4gflHyZSlTjk5bUE4d1DfuALcMa0GO4jlzJaBr_B5KTQTpmSz5576QVWjRfy21UsymZBAenHFxfxmHknSycGFIQUq_BxCWdVFUF8SXOntcnDbIzgUJf1DBb3Cte92N43mTmPzzgIoaoy4MCOrfl2hBxVfhv62_oUnNy_wDqjuLwt-PKalyPWK5i6QpcrJSvaGc6TEVDuwoNGD8x2JiX8DvVuySvtDMJ_ZtBzL2lbIw9J9F9mMxTt72fHA8eUXIemN-s764o7w2fYvu-wBjNQ5-Gosuw4cNdZK-n5w72_F7A4OmoQW6kjwt8IKEQ9rOeR471YGwfMXr-k_to2YzT-oaa7O5ktqtmNHf4hCVA44pui7FzHeXJdcMjqwd7YsGPw-X0VRrJ9wshNmQlrRiu5tl0CmhTSPfC1ov1m.Ar-q3JIdBajJfG5oYvQMvSVBag64eLNIu6_pDuF4z48&dib_tag=se&keywords=etui%2Bcoque%2Bde%2Bprotection%2Ben%2Bsilicone%2Bpour%2Bflipper%2Bzero&qid=1741217077&sprefix=flipper%2Bzero%2Betui%2B%2Caps%2C104&sr=8-7&th=1')">Silicone Case</button>
+                <button class="btn" onclick="openLink('https://shop.flipperzero.one/collections/flipper-zero-accessories/products/screen-protector-for-flipper-zero')">Screen Protector</button>
+                <button class="btn" onclick="openLink('https://www.etsy.com/fr/search?q=flipper%20zero&ref=search_bar')">More on Etsy</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- Wifi flasher -->
+        <div class="menu hidden" id="wifiMenu">
+            <h3 class="section-title"><i class="fas fa-wifi"></i>Wifi Devboard Tools</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/unj92220mo0g02j/FZ_Marauder_v2.8.zip/file')">Download Wifi Flasher</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- .FAP apps -->
+        <div class="menu hidden" id="fapMenu">
+            <h3 class="section-title"><i class="fas fa-cogs"></i>Flipper Applications</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/vcjzs0mm29gu8uf/ble_spam.zip/file')">BLE Spam</button>
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/zkoh37yeh83apy7/NRF24_Tools.zip/file')">NRF24 Tools</button>
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/hoxtoxdmuuxdpow/ESP_Tools.zip/file')">ESP Tools</button>
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/af42wyy5odumevv/subghz_bruteforcer_%252B_jammer.zip/file')">Sub-GHz Bruteforcer</button>
+                <button class="btn" onclick="openLink('https://www.mediafire.com/file/1vzc7ma9f05hk7q/html_files_for_evil_portal.zip/file')">Evil Portal HTML</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- Diagrams -->
+        <div class="menu hidden" id="diagramsMenu">
+            <h3 class="section-title"><i class="fas fa-project-diagram"></i>Connection Diagrams</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://user-images.githubusercontent.com/10090793/216795803-31a787c6-a19b-4368-8fcb-68438207683b.png')">CC1101 + NRF24</button>
+                <button class="btn" onclick="openLink('https://github.com/SequoiaSan/FlipperZero-Wifi-ESP8266-Deauther-Module/blob/FlipperZero-Module-v2/FlipperZeroModule/rep_images/Schematics_1.jpg?raw=true')">Deauther Diagram 1</button>
+                <button class="btn" onclick="openLink('https://github.com/SequoiaSan/FlipperZero-Wifi-ESP8266-Deauther-Module/blob/FlipperZero-Module-v2/FlipperZeroModule/rep_images/Schematics_2.jpg?raw=true')">Deauther Diagram 2</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- Shop -->
+        <div class="menu hidden" id="buyMenu">
+            <h3 class="section-title"><i class="fas fa-shopping-cart"></i>Online Shops</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://flipperzero.one/')">Official Store</button>
+                <button class="btn" onclick="openLink('https://www.amazon.fr/')">Amazon</button>
+                <button class="btn" onclick="openLink('https://fr.aliexpress.com/')">AliExpress</button>
+                <button class="btn" onclick="openLink('https://www.etsy.com/fr/')">Etsy</button>
+                <button class="btn" onclick="openLink('https://www.flipper-hub.de')">Flipper Hub</button>
+                <button class="btn" onclick="openLink('https://www.tindie.com')">Tindie</button>
+                <button class="btn" onclick="openLink('https://rabbit-labs.com/')">Rabbit Labs</button>
+                <button class="btn" onclick="openLink('https://shop.kanjian.fr')">Kanjian</button>
+                <button class="btn" onclick="openLink('https://poppin.info')">Poppin Shop</button>
+                <button class="btn" onclick="openLink('https://bloteck.com')">Bloteck</button>
+                <button class="btn" onclick="openLink('https://www.pcbway.com/')">PCBWay</button>
+                <button class="btn" onclick="openLink('https://lab401.com')">Lab401</button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
+
+        <!-- About -->
+        <div class="menu hidden" id="aboutMenu">
+            <h3 class="section-title"><i class="fas fa-user"></i>About Me</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="openLink('https://discord.com/users/ltx___74')">
+                    <i class="fab fa-discord"></i> Discord: ltx___74
+                </button>
+                <button class="btn" onclick="openLink('https://github.com/LTX128/')">
+                    <i class="fab fa-github"></i> GitHub: LTX128
+                </button>
+                <button class="btn" onclick="openLink('https://www.tiktok.com/@m5.x.flipper')">
+                    <i class="fab fa-tiktok"></i> TikTok: m5.x.flipper
+                </button>
+                <button class="btn btn-back" onclick="showSubMenu('mainMenu')">
+                    <i class="fas fa-arrow-left"></i> Back to Main Menu
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!--Firmwares-->
-    <div class="menu hidden" id="firmwareMenu">
-        <button onclick="openLink('https://momentum-fw.dev/')">Momentum Firmware</button>
-        <button onclick="openLink('https://flipper-xtre.me/')">Xtreme Firmware</button>
-        <button onclick="openLink('https://flipperunleashed.com/')">Unleashed Firmware</button>
-        <button onclick="openLink('https://flipperzero.one/')">Default Firmware</button>
-        <button onclick="openLink('https://rogue-master.net/')">RogueMaster Firmware</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--Tools -->
-    <div class="menu hidden" id="toolsMenu">
-        <button onclick="openLink('https://www.mediafire.com/file/l7cs01x5gho6nti/Sub-GHz_Collection.zip/file')">Sub-GHz
-            Collection</button>
-        <button onclick="openLink('https://www.mediafire.com/file/lnetzsflnme479w/NFC_Collection.zip/file')">NFC
-            Collection</button>
-        <button
-            onclick="openLink('https://www.mediafire.com/file/reyblgkcw6jff72/Infrared_Collection.zip/file')">Infrared
-            Collection</button>
-        <button
-            onclick="openLink('https://www.mediafire.com/file/dewd32r9q4pl0q6/BadUSB_-_BLE_Collection.zip/file')">USB -
-            BLE script Collection</button>
-        <button onclick="openLink('https://www.mediafire.com/file/3g1exm8isstg7q0/RFID_Collection.zip/file')">RFID
-            Collection</button>
-        <button onclick="openLink('https://github.com/UberGuidoZ/Flipper')">All in one + other</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--QFlipper-->
-    <div class="menu hidden" id="qflipperMenu">
-        <button
-            onclick="openLink('https://update.flipperzero.one/builds/qFlipper/1.3.3/qFlipperSetup-64bit-1.3.3.exe?_gl=1*1mcus1w*_ga_GM78S6JK0K*MTc0MTIxMDIxMC4xLjAuMTc0MTIxMDIxOC41Mi4wLjA.')">QFlipper
-            for Windows</button>
-        <button
-            onclick="openLink('https://update.flipperzero.one/builds/qFlipper/1.3.3/qFlipper-x86_64-1.3.3.AppImage?_gl=1*pt4app*_ga_GM78S6JK0K*MTc0MTIxMDIxMC4xLjAuMTc0MTIxMDIxOC41Mi4wLjA.')">QFlipper
-            for Linux</button>
-        <button
-            onclick="openLink('https://update.flipperzero.one/builds/qFlipper/1.3.3/qFlipper-1.3.3.dmg?_gl=1*93hi4i*_ga_GM78S6JK0K*MTc0MTIxMDIxMC4xLjAuMTc0MTIxMDIxOC41Mi4wLjA.')">QFlipper
-            for MacOS</button>
-        <button onclick="openLink('https://play.google.com/store/apps/details?id=com.flipperdevices.app')">QFlipper for
-            Android</button>
-        <button onclick="openLink('https://apps.apple.com/app/flipper-mobile-app/id1534655259')">QFlipper for
-            iOS</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--Discord-->
-    <div class="menu hidden" id="discordMenu">
-        <button onclick="openLink('https://discord.gg/RpEk2NQ3pQ')">Official Flipper Zero Discord Server</button>
-        <button onclick="openLink('https://discord.gg/mdEQjg33DG')">Momentum Firmware Discord Server</button>
-        <button onclick="openLink('https://discord.gg/crazyco')">Xtreme Firmware Discord Server</button>
-        <button onclick="openLink('https://discord.unleashedflip.com/')">Unleashed Firmware Discord Server</button>
-        <button onclick="openLink('https://discord.gg/gF2bBUzAFe')">Rogumaster Firmware Discord Server</button>
-        <button onclick="openLink('https://discord.gg/EGQJurMUwh')">Kanjian</button>
-        <button onclick="openLink('https://discord.gg/CqqPS5Tc3T')">HackLab</button>
-        <button onclick="openLink('https://discord.gg/emensta-s-community-1229027335534153791')">Emensta's
-            community</button>
-        <button onclick="openLink('https://discord.gg/rkJDEgY6qP')">POPP.N</button>
-        <button onclick="openLink('https://discord.gg/uVKF6pJhgX')">EuroThrottle TECH HAUS</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--Modules-->
-    <div class="menu hidden" id="modulesMenu">
-        <button
-            onclick="openLink('https://www.amazon.fr/-/en/dp/B0BBWHS5R1/ref=sr_1_5?crid=234ICU4KP907S&dib=eyJ2IjoiMSJ9.vcWyGk7zLsCqgTDDsdeyyDnjgZw1NbgHhKUZCQ5wZ1hvFDM6LT6hhjaP71v-k4vvd0hAGZx4m9snX3Nsge-eeegSaMviDsFU2j380w_VYRjG_D7KZdTQ4olGugEN48eHB3GHHK-H3YfkidPD9HKOmWN_xCIhXGo1QGGxVJenqFphpML-TIjPoZbFw8cqMKEvzWVXWULq-QkXKBaUgJ0aqbslqe2llOtFihlB49abFwYxsXJeR4CKBGdLarfOwgDLNeKJwrejvY0OJHbWSMFBTJoJi_MSxnXuEXOOqPxNWHWNFGevQPkOElJwzIG9paRKB7PUZUSdL6-zMf3vo3PiSCK3CkAZ2UOBaJVtDaLgVuv7hJYxHlwI2FvlBkkgriOtcM0a3U1_H2CyqJIVESanRj5BX-yQlwqESLvwqWbCQs7FcfFi-63deCmHA2tGD_zU.-E6aOTR2Q2k0XVcJ5MltW2bnpRSutfNPNCQNSSZlDNQ&dib_tag=se&keywords=flipper+zero+wifi+devboard&qid=1741214420&sprefix=flipper+zero+w%2Caps%2C108&sr=8-5')">Wifi
-            Module v1 (Devboard)</button>
-        <button
-            onclick="openLink('https://www.amazon.fr/-/en/dp/B0CSVRTZD9/ref=sr_1_6?crid=105VUG1E2N65J&dib=eyJ2IjoiMSJ9.78yRPA6vQjt42H7YvzlL-q0G7BC1okfQaYREPQJbOqcL1sMkZEmx0bh9_nYShO8bj8aMi1VfSJB7PJiP73pVUh8ouQ2Q9nVamuEqvi3936OV4lZg2osgiDvOo-HsjF9ksvALX3Jbt8Em1QmDEN6ZH6SFGtnxY2Fs0wFfrHa-VlqDFbi6xQyBUmqYoggvmaILBzhIEfHcYSpGZwGrXs6ehyp5gUXHYYbVoUgKOIZLYWWgb0zC7ufg2ssQGWEdNru_q0z2x662TA6pK8zbEox04bvy3lYh80WpAgCcViWAuI_pRJ_zJCIoZkyleo6WdSp78i68PhrLfvva2VwAudZlRjCclcQJPfd4hckRnf3OsqZ-GTlycwQgxtFNwONzlGJIUlWo4uk7t-rIKHyUqgy8anJAWKzrG97q2rZFkP8RS3Zr6db5PFKDSxa_-wosfDKI.CIPYQSLlltIloDITki_9U9TgsqzrMUQUX6YY_qUyeu8&dib_tag=se&keywords=flipper%2Bzero%2Bmodule&qid=1741214469&sprefix=flipper%2Bzero%2Bmodu%2Caps%2C113&sr=8-6&th=1')">CC1101
-            Module + Protective cover + Full black silicone case (Aesthetic)</button>
-        <button onclick="openLink('https://fr.aliexpress.com/item/1005007894499552.html')">CC1101 Module</button>
-        <button onclick="openLink('https://fr.aliexpress.com/item/1005007072081464.html')">Cables</button>
-        <button onclick="openLink('https://fr.aliexpress.com/item/1005007530439808.html')">NRF24L01 Module
-            (Aesthetic)</button>
-        <button onclick="openLink('https://fr.aliexpress.com/item/1005007279570381.html')">NRF24L01 Module</button>
-        <button onclick="openLink('https://fr.aliexpress.com/item/1005008555214261.html')">CC1101 + WiFi + ESP32/NRF24
-            (Multiboard)</button>
-        <button
-            onclick="openLink('https://rabbit-labs.com/product/the-original-ir-blaster-compatible-with-flipper-zero-by-rabbit-labs-3/?v=82a9e4d26595')">IR
-            module</button>
-        <button onclick="openLink('https://fr.aliexpress.com/item/1005008555071982.html')">Deauther Module</button>
-        <button
-            onclick="openLink('https://www.etsy.com/fr/listing/1626018148/carte-magique-nfc-1k-uid-modifiable-pour?ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=flipper+zero&ref=sr_gallery-1-1&pro=1&sts=1&content_source=6e1ad03d1bfeb3625a05973c3cad390f21f52f5c%253A1626018148&organic_search_click=1&logging_key=6e1ad03d1bfeb3625a05973c3cad390f21f52f5c%3A1626018148')">NFC
-            cards</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--Aesthetic-->
-    <div class="menu hidden" id="aestheticMenu">
-        <button
-            onclick="openLink('https://www.etsy.com/fr/listing/1665924660/estuche-flipper-zero-wifi-devboard?ga_order=most_relevant&ga_search_type=all&ga_view_type=gallery&ga_search_query=flipper+zero&ref=sr_gallery-1-6&pro=1&sts=1&content_source=abeebb4dccb54a6e8a7e0c3d727ee00137b2cd00%253A1665924660&organic_search_click=1&logging_key=abeebb4dccb54a6e8a7e0c3d727ee00137b2cd00%3A1665924660')">Protection
-            for devboard</button>
-        <button onclick="openLink('https://fr.aliexpress.com/item/1005007732068498.html')">Full black silicone
-            case</button>
-        <button onclick="openLink('https://fr.aliexpress.com/item/1005006391639410.html')">Protective cover</button>
-        <button onclick="openLink('https://fr.aliexpress.com/item/1005006174311166.html')">Transparent case</button>
-        <button
-            onclick="openLink('https://www.amazon.fr/-/en/dp/B0CK4V8M4M/ref=sr_1_7?crid=SBGDNCAT8ETH&dib=eyJ2IjoiMSJ9.U-3lRF_uQROAVfastNmqPRoSSjmH4gflHyZSlTjk5bUE4d1DfuALcMa0GO4jlzJaBr_B5KTQTpmSz5576QVWjRfy21UsymZBAenHFxfxmHknSycGFIQUq_BxCWdVFUF8SXOntcnDbIzgUJf1DBb3Cte92N43mTmPzzgIoaoy4MCOrfl2hBxVfhv62_oUnNy_wDqjuLwt-PKalyPWK5i6QpcrJSvaGc6TEVDuwoNGD8x2JiX8DvVuySvtDMJ_ZtBzL2lbIw9J9F9mMxTt72fHA8eUXIemN-s764o7w2fYvu-wBjNQ5-Gosuw4cNdZK-n5w72_F7A4OmoQW6kjwt8IKEQ9rOeR471YGwfMXr-k_to2YzT-oaa7O5ktqtmNHf4hCVA44pui7FzHeXJdcMjqwd7YsGPw-X0VRrJ9wshNmQlrRiu5tl0CmhTSPfC1ov1m.Ar-q3JIdBajJfG5oYvQMvSVBag64eLNIu6_pDuF4z48&dib_tag=se&keywords=etui%2Bcoque%2Bde%2Bprotection%2Ben%2Bsilicone%2Bpour%2Bflipper%2Bzero&qid=1741217077&sprefix=flipper%2Bzero%2Betui%2B%2Caps%2C104&sr=8-7&th=1')">Silicone
-            Protective Case</button>
-        <button
-            onclick="openLink('https://shop.flipperzero.one/collections/flipper-zero-accessories/products/screen-protector-for-flipper-zero')">Screen
-            Protector</button>
-        <button onclick="openLink('https://www.etsy.com/fr/search?q=flipper%20zero&ref=search_bar')">Others</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--Wifi flasher-->
-    <div class="menu hidden" id="wifiMenu">
-        <button onclick="openLink('https://www.mediafire.com/file/unj92220mo0g02j/FZ_Marauder_v2.8.zip/file')">Download
-            Wifi Devboard Flasher by UberGuidoZ</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--.FAP apps-->
-    <div class="menu hidden" id="fapMenu">
-        <button onclick="openLink('https://www.mediafire.com/file/vcjzs0mm29gu8uf/ble_spam.zip/file')">BLE Spam</button>
-        <button onclick="openLink('https://www.mediafire.com/file/zkoh37yeh83apy7/NRF24_Tools.zip/file')">NRF24
-            Tools</button>
-        <button onclick="openLink('https://www.mediafire.com/file/hoxtoxdmuuxdpow/ESP_Tools.zip/file')">ESP
-            Tools</button>
-        <button
-            onclick="openLink('https://www.mediafire.com/file/af42wyy5odumevv/subghz_bruteforcer_%252B_jammer.zip/file')">Sub-GHz
-            Bruteforcer + Jammer</button>
-        <button
-            onclick="openLink('https://www.mediafire.com/file/1vzc7ma9f05hk7q/html_files_for_evil_portal.zip/file')">HTML
-            files for Evil Portal</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--Diagrams-->
-    <div class="menu hidden" id="diagramsMenu">
-        <button
-            onclick="openLink('https://user-images.githubusercontent.com/10090793/216795803-31a787c6-a19b-4368-8fcb-68438207683b.png')">CC1101
-            Module + NRF24 Module</button>
-        <button
-            onclick="openLink('https://github.com/SequoiaSan/FlipperZero-Wifi-ESP8266-Deauther-Module/blob/FlipperZero-Module-v2/FlipperZeroModule/rep_images/Schematics_1.jpg?raw=true')">Deauther
-            Module image 1</button>
-        <button
-            onclick="openLink('https://github.com/SequoiaSan/FlipperZero-Wifi-ESP8266-Deauther-Module/blob/FlipperZero-Module-v2/FlipperZeroModule/rep_images/Schematics_2.jpg?raw=true')">Deauther
-            Module image 2</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--Shop-->
-    <div class="menu hidden" id="buyMenu">
-        <button onclick="openLink('https://flipperzero.one/')">Official website</button>
-        <button onclick="openLink('https://www.amazon.fr/')">Amazon</button>
-        <button onclick="openLink('https://fr.aliexpress.com/')">AliExpress</button>
-        <button onclick="openLink('https://www.etsy.com/fr/')">Esty</button>
-        <button onclick="openLink('https://www.flipper-hub.de')">Flipper Hub</button>
-        <button onclick="openLink('https://www.tindie.com')">Tindie</button>
-        <button onclick="openLink('https://rabbit-labs.com/')">Rabbit Labs</button>
-        <button onclick="openLink('https://shop.kanjian.fr')">Kanjian</button>
-        <button onclick="openLink('https://poppin.info')">Poppin Shop</button>
-        <button onclick="openLink('https://bloteck.com')">Bloteck</button>
-        <button onclick="openLink('https://www.pcbway.com/')">Pcbway</button>
-        <button onclick="openLink('https://lab401.com')">Lab401</button>
-        <button onclick="showSubMenu('mainMenu')">Back</button>
-    </div>
-
-    <!--Me-->
-    <div class="menu hidden" id="aboutMenu">
-        <button onclick="openLink('https://discord.com/users/ltx___74')">
-            <i class="icon fab fa-discord"></i> Discord: ltx___74
-        </button>
-        <button onclick="openLink('https://github.com/LTX128/')">
-            <i class="icon fab fa-github"></i> GitHub: LTX128
-        </button>
-        <button onclick="openLink('https://www.tiktok.com/@m5.x.flipper')">
-            <i class="icon fab fa-tiktok"></i> Tiktok: m5.x.flipper
-            <button onclick="showSubMenu('mainMenu')">
-                <i class="icon fas fa-arrow-left"></i> Back
-            </button>
-    </div>
-
-    <!--By LTX74 -->
     <div class="footer">
-        <p>By <a href="#" onclick="showSubMenu('aboutMenu'); return false;">LTX74</a> | Flipper Zero Resources</p>
+        <p>Created by <a href="#" onclick="showSubMenu('aboutMenu'); return false;">LTX74</a> | Flipper Zero Resources</p>
     </div>
 
     <script>
         function showSubMenu(menuId) {
-            document.querySelectorAll('.menu').forEach(menu => menu.classList.add('hidden'));
+            document.querySelectorAll('.menu').forEach(menu => {
+                menu.classList.add('hidden');
+                menu.style.animation = 'none';
+                setTimeout(() => {
+                    menu.style.animation = '';
+                }, 10);
+            });
             document.getElementById(menuId).classList.remove('hidden');
+            
+            // Scroll to top when showing a new menu
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function openLink(url) {
@@ -333,6 +473,5 @@
         }
     </script>
 </body>
-
 </html>
-<!--Made by LTX74-->
+<!--Made by LTX74--!>
